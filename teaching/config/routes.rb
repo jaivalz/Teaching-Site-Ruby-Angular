@@ -7,6 +7,11 @@ Rails.application.routes.draw do
   end  
 
   resources :schools  
+  
+  #Progresses
+  get    "chapters/read" => "progresses#show"
+  post   "chapters/mark_as_complete" => "progresses#create"
+  delete "chapters/mark_as_incomplete" => "progresses#delete"
 
   #Users  
   get  "/my_current_user" => "users#my_current_user"  
