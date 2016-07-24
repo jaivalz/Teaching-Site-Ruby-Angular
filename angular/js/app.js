@@ -1,6 +1,6 @@
 var mainApp = angular.module('mainApp', ['ui.router', 'authModule', 'dashMdl', 'courseMdl', 'settingsMdl', 'adminMdl', 'paymentsMdl', 'schoolService', 'userService', 'ngFileUpload']);
 
-mainApp.constant('railsServer', 'localhost:3000');
+mainApp.constant('railsServer', 'http://red-tires-199762.nitrousapp.com/');
 mainApp.constant('subscriptionValue', 30);
 
 // fetches headers from localstorage
