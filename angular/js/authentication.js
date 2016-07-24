@@ -25,9 +25,42 @@ authApp.controller('authCtrl', ['$scope', '$http', '$location', '$state', 'rails
             fadeAlert("#sign_up_alert");
         });
     }
-    
+
+    $scope.loginUser = function(user_email, user_password) {
+        var credentials = {
+            user: {
+                email: user_email,
+                password: user_password
+            }
+        };
+        $http({
+            method: 'POST',
+            url: rails_server_path + '/users/sign_in.json',
+            data: credentials
+        }).then(function successCallback(response) {
+            console.log(response.data);
+            // save email and token in local storage
+            var authentication_token = response.data.authentication_token;
+            var email = response.data.user.email;
+            StoreLoginData(authentication_token, email);
+            // shows dashboard
+            $state.go("dashboard");
+        }, function errorCallback(error) {
+            $scope.login_status = "alert alert-danger";
+            $scope.login_message = "Invalid email or password";
+            fadeAlert("#login_alert");
+        });
+    }
+
     function fadeAlert(id) {
         $(id).fadeTo(3000, 0);
     }
-
+    
 }]);
+
+authApp.factory('StoreLoginData', function() {
+    return function(authentication_token, email) {
+        localStorage.token = authentication_token;
+        localStorage.email = email;
+    }
+});
